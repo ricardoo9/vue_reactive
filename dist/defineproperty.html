@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <input type="text">
+</body>
+<script>
+  let data = {
+    value: 'hello world'
+  }
+
+  document.querySelector('input').addEventListener('input', (e) => {
+    console.dir(e.target.value)
+    data.value =  e.target.value
+  })
+  document.querySelector('input').value = data.value
+  function defineReactive (obj, key, val, cb) {
+    Object.defineProperty(obj, key, {
+      // 可以被枚举
+      enumerable: true,
+      // 可以被配置
+      configurable: true,
+      get() {
+        console.log('数据被获取了');
+        return val
+      },
+      set(value) {
+        val = value
+        // document.querySelector('input').value = value
+        console.log(value,'输入框输入的值');
+        cb(value)
+      }
+    })
+  };
+  function callBack (val) {
+    document.querySelector('input').value = val
+  }
+  
+  defineReactive(data, 'value', data['value'], callBack)
+  
+
+
+</script>
+</html>
